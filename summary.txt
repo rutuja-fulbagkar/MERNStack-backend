@@ -1,0 +1,31 @@
+project-name/
+├── config/
+│   └── db.js               # Database connection setup
+│   └── env.js              # Environment variable configuration
+├── controllers/
+│   └── userController.js   # Controller logic for users
+│   └── authController.js   # Controller logic for authentication
+├── middlewares/
+│   └── authMiddleware.js   # Middleware for authentication
+│   └── errorHandler.js     # Centralized error handling middleware
+├── models/
+│   └── User.js             # User schema/model
+├── routes/
+│   └── userRoutes.js       # User-related routes
+│   └── authRoutes.js       # Auth-related routes
+├── services/
+│   └── emailService.js     # Email sending logic
+│   └── tokenService.js     # JWT/Token management
+├── utils/
+│   └── logger.js           # Utility for logging
+│   └── helperFunctions.js  # Reusable helper functions
+├── public/                 # Static files (images, CSS, etc.)
+├── .env                    # Environment variables
+├── .gitignore              # Files to be ignored by Git
+├── package.json            # Project metadata and dependencies
+├── server.js               # Entry point of the application
+
+
+- npm init
+- npm install express mongoose dotenv cors bcrypt jsonwebtoken multer nodemailer
+- echo.>.gitignore
