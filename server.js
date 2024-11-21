@@ -1,9 +1,8 @@
 import express from "express";
 import { createServer } from "http";
 import dotenv from "dotenv";
-import { connectDB } from "./config/dbs.js";
+import { connectDB } from "./config/db.js";
 import cors from "cors"; 
-n
 
 // Load environment variables
 dotenv.config();
@@ -11,9 +10,9 @@ dotenv.config();
 connectDB();
  
 const app = express();
-// app.get('/', (req, res) => { 
-//     res.send('Hello, World!');
-// })
+app.get('/', (req, res) => { 
+    res.send('Hello, World!');
+})
 // Middleware to parse JSON request bodies
 app.use(express.json());
 // Enable CORS
