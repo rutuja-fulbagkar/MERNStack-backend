@@ -30,3 +30,4 @@ project-name/
 - npm install express mongoose dotenv cors bcrypt jsonwebtoken multer nodemailer
 - echo.>.gitignore
 - npm i nodemon -D
+- i m studying
