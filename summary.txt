@@ -30,4 +30,19 @@ project-name/
 - npm install express mongoose dotenv cors bcrypt jsonwebtoken multer nodemailer
 - echo.>.gitignore
 - npm i nodemon -D
-- i m studying
+
+ Cloning a Repository with Token:
+- git clone https://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@github.com/rutuja-fulbagkar/MERNStack-backend.git
+- git add .
+- git commit -m "cmt"
+- git push origin -u rutuja 
+- git fetch --all
+- git pull origin main
+
+- git stash
+- git pull
+- git status
+- git stash apply
+- git add .
+- git commit -m "cmt"
+- git push origin
