@@ -388,3 +388,131 @@ export const deleteProduct = async (req, res) => {
     });
   }
 }
+
+ 
+// Archive a product
+export const archiveProduct = async (req, res) => {
+  try {
+    const { productId } = req.params; // Get product ID from request parameters
+
+    // Find the product by ID
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found',
+      });
+    }
+
+    // Update the product's isArchived field to true
+    product.isArchived = true;
+    product.archivedAt = new Date(); // Optional: you can store the timestamp of when the product was archived
+
+    // Save the updated product
+    await product.save();
+
+    // Send success response
+    res.status(200).json({
+      success: true,
+      message: 'Product archived successfully',
+      data: product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error archiving product',
+      error: error.message,
+    });
+  }
+};
+
+
+export const getArchivedProducts = async (req, res) => {
+  try {
+    const archivedProducts = await Product.find({
+      isArchived: true,
+    });
+     res.status(200).json({
+            success: true,
+            data: archivedProducts,
+        });
+  } catch (error) {
+    console.error('Error fetching archived products:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error while fetching archived products',
+      error: error.message,
+    });
+  }
+}
+
+ 
+ 
+
+export const getAllProductsWithoutPagination = async (req, res) => {
+  try {
+    // Extract query parameters
+    const { search, category, minPrice, maxPrice, region, startDate, endDate, isArchived } = req.query;
+
+    // Initialize query object
+    let query = {};
+
+    // Conditional Filters
+    if (category) {
+      query.productCategory = { $regex: new RegExp(category, 'i') }; // Case-insensitive category filter
+    }
+
+    if (minPrice || maxPrice) {
+      query.sellingPrice = {};
+      if (minPrice) query.sellingPrice.$gte = parseFloat(minPrice);
+      if (maxPrice) query.sellingPrice.$lte = parseFloat(maxPrice);
+    }
+
+    if (region) {
+      query.region = region;
+    }
+
+    if (startDate && endDate) {
+      const parsedStartDate = new Date(startDate);
+      const parsedEndDate = new Date(endDate);
+      parsedEndDate.setHours(23, 59, 59, 999); // Include the entire end date
+      query.createdAt = { $gte: parsedStartDate, $lte: parsedEndDate };
+    }
+
+    if (search) {
+      const searchRegex = new RegExp(escapeRegExp(search), 'i');
+      query.$or = [
+        { name: searchRegex },
+        { SKU: searchRegex },
+        { description: searchRegex },
+      ];
+    }
+
+    // Handle the 'isArchived' filter
+    if (isArchived !== undefined) {
+      query.isArchived = isArchived === 'true'; // Check for 'true'/'false' string and convert to boolean
+    } else {
+      query.isArchived = false;  // Default to non-archived products if 'isArchived' is not provided
+    }
+
+    // Log the query to inspect it
+    console.log("Query:", query); 
+
+    // Retrieve products without pagination
+    const products = await Product.find(query).exec();
+
+    // Prepare response
+    res.status(200).json({
+      success: true,
+      data: products,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching products',
+      error: error.message,
+    });
+  }
+};
+

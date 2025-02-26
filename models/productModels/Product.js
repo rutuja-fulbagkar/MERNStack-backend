@@ -115,7 +115,14 @@ const productSchema = new mongoose.Schema({
      downloadableFile: {
         type: String, // Assuming it's a file path or URL
         required: false
-    }
+    },
+      isArchived: {
+        type: Boolean,
+        default: false, // Indicates if the product is archived
+    },
+    archivedAt: {
+        type: Date, // Date when the product was archived
+    },
 });
 
 const Product = mongoose.model('Product', productSchema);
