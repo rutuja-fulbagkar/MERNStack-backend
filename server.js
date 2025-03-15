@@ -33,7 +33,7 @@ app.use(cors());
 // Create an HTTP server
 const httpServer = createServer(app);
 //  Set the port from environment variables
-const PORT = process.env.PORT || "https://mern-stack-backend-seven.vercel.app/";
+const PORT = process.env.PORT || 8000;
 // Start the server
 httpServer.listen(PORT, () => {
   console.log(`Server Running on port ${PORT}`);
