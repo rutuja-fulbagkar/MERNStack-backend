@@ -47,4 +47,3 @@ project-name/
 - git commit -m "cmt"
 - git push origin
 
-testasa
